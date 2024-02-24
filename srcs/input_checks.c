@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:26:43 by jcameira          #+#    #+#             */
-/*   Updated: 2023/11/21 21:04:40 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/02/24 00:27:59 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ int	issorted(t_stack *stack)
 {
 	int	i;
 	int	j;
+	int	size;
 
 	stack = find_first(stack);
 	i = 0;
 	j = stack->nbr;
-	while (i++ < stacksize(stack))
+	size = stacksize(stack);
+	while (i++ < size)
 	{
 		if (j > stack->nbr)
 			return (0);

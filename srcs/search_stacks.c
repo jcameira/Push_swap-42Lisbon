@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:33:05 by jcameira          #+#    #+#             */
-/*   Updated: 2023/11/19 18:34:22 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/02/24 00:25:36 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ t_stack	*max_node(t_stack *stack)
 
 t_stack	*find_first(t_stack *stack)
 {
-	if (stack->index >= stacksize(stack) / 2)
+	int	size;
+
+	size = stacksize(stack);
+	if (stack->index >= size / 2)
 		while (stack->index != 1)
 			stack = stack->next;
 	else
@@ -59,9 +62,12 @@ t_stack	*find_first(t_stack *stack)
 
 t_stack	*lastnode(t_stack *stack)
 {
+	int	size;
+
+	size = stacksize(stack);
 	if (!stack)
 		return (NULL);
-	while (stack->index != stacksize(stack))
+	while (stack->index != size)
 		stack = stack->next;
 	return (stack);
 }

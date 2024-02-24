@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:28:56 by jcameira          #+#    #+#             */
-/*   Updated: 2023/11/21 12:28:58 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/02/24 00:27:27 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	addnode_back(t_stack **stack, t_stack *new)
 void	addnode_front(t_stack **stack, t_stack *new)
 {
 	t_stack	*last;
+	int		size;
 
 	if (!(*stack))
 	{
@@ -61,7 +62,8 @@ void	addnode_front(t_stack **stack, t_stack *new)
 		return ;
 	}
 	last = lastnode(*stack);
-	while ((*stack)->index != stacksize((*stack)))
+	size = stacksize(*stack);
+	while ((*stack)->index != size)
 	{
 		(*stack)->index++;
 		(*stack) = (*stack)->next;

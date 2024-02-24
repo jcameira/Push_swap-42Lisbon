@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:16:14 by jcameira          #+#    #+#             */
-/*   Updated: 2023/11/21 10:54:38 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/02/24 00:26:32 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@ void	rotate(t_stack **stack)
 
 void	rev_rotate(t_stack **stack)
 {
-	if (!(*stack) || stacksize((*stack)) == 1)
+	int	size;
+
+	size = stacksize(*stack);
+	if (!(*stack) || size == 1)
 		return ;
 	*stack = find_first(*stack);
-	while ((*stack)->index != stacksize(*stack))
+	while ((*stack)->index != size)
 	{
 		(*stack)->index++;
 		*stack = (*stack)->next;

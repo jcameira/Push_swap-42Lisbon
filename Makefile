@@ -52,7 +52,7 @@ $(NAME):			$(OBJ_DIR) $(LIBFT) $(FT_PRINTF) $(GNL) $(OBJS)
 					@$(CC) $(CFLAGS) $(MAIN) $(OBJS) -L$(LIBFT_PATH) -L$(GNL_PATH) -L$(FT_PRINTF_PATH) $(PERSONAL_LIBS) -o $(NAME)
 					@echo "\033[2F\033[0K$(CYAN)$(NAME)$(DEFAULT) successfully created\033[E"
 					@if norminette | grep -q -v "OK!"; then \
-						norminette | grep -v OK!; echo "Norminette has$(RED)  errors!$(DEFAULT)"; \
+						norminette | grep -v OK!; echo "Norminette has$(RED) errors!$(DEFAULT)"; \
 					else \
 						echo "Norminette$(GRN) OK!!$(DEFAULT)"; \
 					fi

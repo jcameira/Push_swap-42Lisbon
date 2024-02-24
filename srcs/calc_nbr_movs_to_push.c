@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:28:10 by jcameira          #+#    #+#             */
-/*   Updated: 2023/11/21 12:28:12 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/02/24 00:52:12 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	get_nbr_movs_rarrb(t_stack *stack_a, t_stack *stack_b,
 		if (nbr_movs_to_pb(stack_b, node_to_push->nbr))
 			nbr_movs = stacksize(stack_b)
 				- nbr_movs_to_pb(stack_b, node_to_push->nbr);
-		nbr_movs += (node_to_push->index - 1);
+		nbr_movs += node_to_push->index - 1;
 	}
 	else
 	{
