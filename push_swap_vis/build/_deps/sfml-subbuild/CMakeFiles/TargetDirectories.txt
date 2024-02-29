@@ -1,0 +1,3 @@
+/home/jcameira/42Projects/Push_swap-42Lisbon/push_swap_vis/build/_deps/sfml-subbuild/CMakeFiles/sfml-populate.dir
+/home/jcameira/42Projects/Push_swap-42Lisbon/push_swap_vis/build/_deps/sfml-subbuild/CMakeFiles/edit_cache.dir
+/home/jcameira/42Projects/Push_swap-42Lisbon/push_swap_vis/build/_deps/sfml-subbuild/CMakeFiles/rebuild_cache.dir
