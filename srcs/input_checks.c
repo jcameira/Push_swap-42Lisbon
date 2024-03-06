@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:16:35 by jcameira          #+#    #+#             */
-/*   Updated: 2024/03/05 14:51:24 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:34:27 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	check_input(int argc, char **argv)
 	{
 		str = ft_split(argv[i], ' ');
 		if (!str)
-			return (1);
+			return (0);
 		j = -1;
 		while (str[++j])
 		{
