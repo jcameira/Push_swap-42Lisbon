@@ -5,23 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 12:58:01 by jcameira          #+#    #+#             */
-/*   Updated: 2023/11/21 20:31:57 by jcameira         ###   ########.fr       */
+/*   Created: 2024/02/25 13:35:05 by jcameira          #+#    #+#             */
+/*   Updated: 2024/03/03 16:21:25 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <push_swap.h>
 
 int	main(int argc, char **argv)
 {
 	t_stack	*stack_a;
 
-	if (!check_input(argc, argv))
+	if (argc < 2)
 		return (0);
-	if (argc == 2)
-		stack_a = parse_input(argv[1], 0);
-	else
-		stack_a = fill_stack(argc, argv, 1);
+	if (!check_input(argc, argv))
+		return (1);
+	stack_a = create_stack(argv);
+	if (!stack_a)
+		return (1);
+	if (!check_dups(stack_a))
+	{
+		free_stack(&stack_a);
+		return (1);
+	}
 	if (stack_a && !issorted(stack_a))
 		push_swap(&stack_a);
 	free_stack(&stack_a);

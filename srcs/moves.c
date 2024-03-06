@@ -5,85 +5,72 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 14:16:14 by jcameira          #+#    #+#             */
-/*   Updated: 2024/02/24 00:26:32 by jcameira         ###   ########.fr       */
+/*   Created: 2024/02/28 21:41:24 by jcameira          #+#    #+#             */
+/*   Updated: 2024/03/03 16:20:09 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <push_swap.h>
 
 void	rotate(t_stack **stack)
 {
 	t_stack	*tmp;
 
-	if (!(*stack) || stacksize(*stack) == 1)
-		return ;
-	*stack = find_first(*stack);
 	tmp = *stack;
-	while ((*stack)->next != tmp)
+	while (tmp->next != *stack)
 	{
-		*stack = (*stack)->next;
-		(*stack)->index--;
+		tmp = tmp->next;
+		tmp->index--;
 	}
+	tmp = tmp->next;
+	tmp->index = stacksize(*stack) - 1;
 	*stack = (*stack)->next;
-	(*stack)->index = stacksize(*stack);
-	*stack = find_first(*stack);
 }
 
 void	rev_rotate(t_stack **stack)
 {
-	int	size;
+	t_stack	*tmp;
 
-	size = stacksize(*stack);
-	if (!(*stack) || size == 1)
-		return ;
-	*stack = find_first(*stack);
-	while ((*stack)->index != size)
+	tmp = *stack;
+	while (tmp->next != *stack)
 	{
-		(*stack)->index++;
-		*stack = (*stack)->next;
+		tmp->index++;
+		tmp = tmp->next;
 	}
-	(*stack)->index = 1;
-	*stack = find_first(*stack);
+	tmp->index = 0;
+	*stack = (*stack)->previous;
 }
 
 void	swap(t_stack **stack)
 {
 	int	tmp;
 
-	if (!(*stack) || stacksize(*stack) == 1)
-		return ;
-	*stack = find_first(*stack);
 	tmp = (*stack)->nbr;
 	(*stack)->nbr = (*stack)->next->nbr;
 	(*stack)->next->nbr = tmp;
-	*stack = find_first(*stack);
 }
 
 void	push(t_stack **from, t_stack **to)
 {
 	t_stack	*last;
-	t_stack	*first;
+	t_stack	*tmp;
 
-	if (!(*from))
-		return ;
-	if (find_first(*from) == lastnode(*from))
+	if (stacksize(*from) == 1)
 	{
-		addnode_front(to, newnode((*from)->nbr, 1));
+		addnode_front(to, newnode((*from)->nbr));
 		free_stack(from);
 		return ;
 	}
-	*from = find_first(*from);
-	addnode_front(to, newnode((*from)->nbr, 1));
+	addnode_front(to, newnode((*from)->nbr));
 	last = lastnode(*from);
-	first = *from;
+	tmp = *from;
 	*from = (*from)->next;
 	last->next = *from;
 	(*from)->previous = last;
-	free(first);
-	first = (*from);
-	while ((*from)->next != first && (*from)->index--)
-		*from = (*from)->next;
-	(*from)->index--;
-	*from = find_first(*from);
+	free(tmp);
+	tmp = *from;
+	tmp = *from;
+	while (tmp->next != *from && tmp->index--)
+		tmp = tmp->next;
+	tmp->index--;
 }

@@ -5,19 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/27 17:00:42 by jcameira          #+#    #+#             */
-/*   Updated: 2023/11/21 21:17:57 by jcameira         ###   ########.fr       */
+/*   Created: 2024/02/28 01:53:36 by jcameira          #+#    #+#             */
+/*   Updated: 2024/03/06 03:31:01 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <push_swap.h>
 
 void	sort_three(t_stack **stack)
 {
 	t_stack	*min;
 	t_stack	*max;
 
-	*stack = find_first(*stack);
 	min = min_node(*stack);
 	max = max_node(*stack);
 	if ((*stack)->nbr == min->nbr)
@@ -42,51 +41,37 @@ void	sort_three(t_stack **stack)
 
 void	refill_stack_a(t_stack **stack_a, t_stack **stack_b)
 {
-	int		nbr_mov;
-	t_stack	*tmp;
+	t_moves	nbr_mov;
 
 	while (*stack_b)
 	{
-		tmp = *stack_b;
 		nbr_mov = calculations_b_to_a(*stack_a, *stack_b, 1);
-		while (nbr_mov >= 0)
-		{
-			if (nbr_mov == get_nbr_movs_rarb(*stack_a, *stack_b, tmp, 1))
-				nbr_mov = apply_movs_rarb(stack_a, stack_b, tmp, 1);
-			else if (nbr_mov == get_nbr_movs_rrarrb(*stack_a, *stack_b, tmp, 1))
-				nbr_mov = apply_movs_rrarrb(stack_a, stack_b, tmp, 1);
-			else if (nbr_mov == get_nbr_movs_rrarb(*stack_a, *stack_b, tmp, 1))
-				nbr_mov = apply_movs_rrarb(stack_a, stack_b, tmp, 1);
-			else if (nbr_mov == get_nbr_movs_rarrb(*stack_a, *stack_b, tmp, 1))
-				nbr_mov = apply_movs_rarrb(stack_a, stack_b, tmp, 1);
-			else
-				tmp = tmp->next;
-		}
+		if (!ft_strcmp(nbr_mov.type, R_R))
+			apply_movs_rarb(stack_a, stack_b, nbr_mov.node, 1);
+		else if (!ft_strcmp(nbr_mov.type, RR_RR))
+			apply_movs_rrarrb(stack_a, stack_b, nbr_mov.node, 1);
+		else if (!ft_strcmp(nbr_mov.type, RR_R))
+			apply_movs_rrarb(stack_a, stack_b, nbr_mov.node, 1);
+		else if (!ft_strcmp(nbr_mov.type, R_RR))
+			apply_movs_rarrb(stack_a, stack_b, nbr_mov.node, 1);
 	}
 }
 
 void	sort_stack_b(t_stack **stack_a, t_stack **stack_b)
 {
-	int		nbr_mov;
-	t_stack	*tmp;
+	t_moves	nbr_mov;
 
 	while (stacksize(*stack_a) > 3 && !issorted(*stack_a))
 	{
-		tmp = *stack_a;
 		nbr_mov = calculations_a_to_b(*stack_a, *stack_b, 0);
-		while (nbr_mov >= 0)
-		{
-			if (nbr_mov == get_nbr_movs_rarb(*stack_a, *stack_b, tmp, 0))
-				nbr_mov = apply_movs_rarb(stack_a, stack_b, tmp, 0);
-			else if (nbr_mov == get_nbr_movs_rrarrb(*stack_a, *stack_b, tmp, 0))
-				nbr_mov = apply_movs_rrarrb(stack_a, stack_b, tmp, 0);
-			else if (nbr_mov == get_nbr_movs_rrarb(*stack_a, *stack_b, tmp, 0))
-				nbr_mov = apply_movs_rrarb(stack_a, stack_b, tmp, 0);
-			else if (nbr_mov == get_nbr_movs_rarrb(*stack_a, *stack_b, tmp, 0))
-				nbr_mov = apply_movs_rarrb(stack_a, stack_b, tmp, 0);
-			else
-				tmp = tmp->next;
-		}
+		if (!ft_strcmp(nbr_mov.type, R_R))
+			apply_movs_rarb(stack_a, stack_b, nbr_mov.node, 0);
+		else if (!ft_strcmp(nbr_mov.type, RR_RR))
+			apply_movs_rrarrb(stack_a, stack_b, nbr_mov.node, 0);
+		else if (!ft_strcmp(nbr_mov.type, RR_R))
+			apply_movs_rrarb(stack_a, stack_b, nbr_mov.node, 0);
+		else if (!ft_strcmp(nbr_mov.type, R_RR))
+			apply_movs_rarrb(stack_a, stack_b, nbr_mov.node, 0);
 	}
 }
 
@@ -114,10 +99,10 @@ void	push_swap(t_stack **stack_a)
 		fill_stack_b(stack_a, &stack_b);
 		refill_stack_a(stack_a, &stack_b);
 		if (min_node(*stack_a)->index <= stacksize(*stack_a) / 2)
-			while (find_first(*stack_a)->nbr != min_node(*stack_a)->nbr)
+			while ((*stack_a)->nbr != min_node(*stack_a)->nbr)
 				ra(stack_a, 0);
 		else
-			while (find_first(*stack_a)->nbr != min_node(*stack_a)->nbr)
+			while ((*stack_a)->nbr != min_node(*stack_a)->nbr)
 				rra(stack_a, 0);
 	}
 	free_stack(&stack_b);

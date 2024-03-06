@@ -5,130 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 12:26:43 by jcameira          #+#    #+#             */
-/*   Updated: 2024/02/24 00:27:59 by jcameira         ###   ########.fr       */
+/*   Created: 2024/02/27 11:16:35 by jcameira          #+#    #+#             */
+/*   Updated: 2024/03/05 14:51:24 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <push_swap.h>
 
 int	issorted(t_stack *stack)
 {
-	int	i;
-	int	j;
-	int	size;
+	t_stack	*tmp;
+	int		i;
+	int		size;
 
-	stack = find_first(stack);
-	i = 0;
-	j = stack->nbr;
+	tmp = stack;
+	i = -1;
 	size = stacksize(stack);
-	while (i++ < size)
+	while (++i < size - 1)
 	{
-		if (j > stack->nbr)
+		if (tmp->nbr > tmp->next->nbr)
 			return (0);
-		j = stack->nbr;
-		stack = stack->next;
+		tmp = tmp->next;
 	}
 	return (1);
 }
 
-int	check_string(char *str)
+int	check_dups(t_stack *stack)
+{
+	t_stack	*tmp1;
+	t_stack	*tmp2;
+
+	tmp1 = stack;
+	while (tmp1->next != stack)
+	{
+		tmp2 = tmp1->next;
+		while (tmp2 != stack)
+		{
+			if (tmp1->nbr == tmp2->nbr)
+				return (error());
+			tmp2 = tmp2->next;
+		}
+		tmp1 = tmp1->next;
+	}
+	return (1);
+}
+
+int	check_numeric(char *str)
 {
 	int		i;
-	int		args;
-	char	**nbr_lst;
+	char	*tmp;
 
-	i = 0;
-	nbr_lst = ft_split(str, ' ');
-	args = word_count(str, ' ');
-	while (i < args)
+	tmp = ft_itoa(ft_atoi(str));
+	if (str[0] == '+')
 	{
-		if (!check_numeric(nbr_lst[i++]) || !check_dups(nbr_lst))
-		{
-			i = 0;
-			while (i < args)
-				free(nbr_lst[i++]);
-			free(nbr_lst);
-			return (0);
-		}
+		if (ft_strcmp(tmp, str + 1))
+			return (error());
 	}
-	i = 0;
-	while (i < args)
-		free(nbr_lst[i++]);
-	free(nbr_lst);
-	return (1);
-}
-
-int	check_dups(char **nbr)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (nbr[i])
-	{
-		j = i;
-		while (nbr[++j])
-		{
-			if (!ft_strcmp(nbr[i], nbr[j]))
-			{
-				ft_printf("Error\n");
-				return (0);
-			}
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	check_numeric(char *nbr)
-{
-	int	i;
-
-	i = 0;
-	if ((ft_atoi(nbr) > 2147483648 || ft_atoi(nbr) < -2147483648)
-		|| (nbr[i] != '-' && !ft_isdigit(nbr[i]))
-		|| (nbr[i] == '-' && !nbr[i + 1]))
-	{
-		ft_printf("Error\n");
-		return (0);
-	}
-	if (ft_atoi(nbr) >= 0)
-		i = -1;
 	else
+		if (ft_strcmp(tmp, str))
+			return (error());
+	free(tmp);
+	if (ft_atoi(str) < 0 || str[0] == '+')
 		i = 0;
-	while (nbr[++i])
+	else
+		i = -1;
+	while (str[++i])
 	{
-		if (!ft_isdigit(nbr[i]))
-		{
-			ft_printf("Error\n");
-			return (0);
-		}
+		if (!ft_isdigit(str[i]))
+			return (error());
 	}
 	return (1);
 }
 
 int	check_input(int argc, char **argv)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	**str;
 
-	i = 1;
-	if (argc == 1)
-		return (0);
-	else if (argc == 2)
+	i = 0;
+	while (++i < argc)
 	{
-		if (!check_string(argv[1]))
-			return (0);
-	}
-	else if (argc > 2)
-	{
-		if (!check_dups(argv))
-			return (0);
-		while (i < argc)
+		str = ft_split(argv[i], ' ');
+		if (!str)
+			return (1);
+		j = -1;
+		while (str[++j])
 		{
-			if (!check_numeric(argv[i++]))
+			if (!check_numeric(str[j]))
 				return (0);
 		}
+		free_split(str);
 	}
 	return (1);
 }

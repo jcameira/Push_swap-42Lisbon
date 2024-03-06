@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   create_stack.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 13:37:55 by jcameira          #+#    #+#             */
-/*   Updated: 2024/02/27 14:12:57 by jcameira         ###   ########.fr       */
+/*   Created: 2024/02/28 00:12:40 by jcameira          #+#    #+#             */
+/*   Updated: 2024/02/28 01:31:55 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <push_swap.h>
 
-int	ft_atoi(const char *str)
+t_stack	*create_stack(char **argv)
 {
-	int			i;
-	int			neg;
-	long int	num;
+	t_stack	*stack_a;
+	t_stack	*new;
+	char	**str;
+	int		i;
+	int		j;
 
+	stack_a = NULL;
 	i = 0;
-	neg = 1;
-	num = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == 43 || str[i] == 45)
+	while (argv[++i])
 	{
-		if (str[i] == 45)
-			neg = -1;
-		i++;
+		str = ft_split(argv[i], ' ');
+		j = -1;
+		while (str[++j])
+		{
+			new = newnode(ft_atoi(str[j]));
+			if (!new)
+				return (free_stack(&stack_a));
+			addnode_back(&stack_a, new);
+		}
+		free_split(str);
 	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		num = num * 10 + (str[i] - 48);
-		i++;
-	}
-	return (num * neg);
+	get_index(&stack_a);
+	return (stack_a);
 }

@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 13:37:55 by jcameira          #+#    #+#             */
-/*   Updated: 2024/02/27 14:12:57 by jcameira         ###   ########.fr       */
+/*   Created: 2024/02/20 00:45:31 by jcameira          #+#    #+#             */
+/*   Updated: 2024/02/20 00:45:32 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <time.h>
+#include <stdlib.h>
 
-int	ft_atoi(const char *str)
+extern void	*__real_malloc(size_t size);
+
+void	*__wrap_malloc(size_t size)
 {
-	int			i;
-	int			neg;
-	long int	num;
-
-	i = 0;
-	neg = 1;
-	num = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == 43 || str[i] == 45)
-	{
-		if (str[i] == 45)
-			neg = -1;
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		num = num * 10 + (str[i] - 48);
-		i++;
-	}
-	return (num * neg);
+	srand(time(NULL));
+	if (rand() % 2)
+		return (NULL);
+	return (__real_malloc(size));
 }

@@ -1,35 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate_operations.c                                :+:      :+:    :+:   */
+/*   memory_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 00:34:33 by jcameira          #+#    #+#             */
-/*   Updated: 2024/03/06 00:34:54 by jcameira         ###   ########.fr       */
+/*   Created: 2024/02/28 00:05:23 by jcameira          #+#    #+#             */
+/*   Updated: 2024/03/06 02:35:24 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
-void	ra(t_stack **stack_a, int read_flag)
+void	free_split(char **split)
 {
-	rotate(stack_a);
-	if (!read_flag)
-		ft_printf("ra\n");
+	int	i;
+
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
 }
 
-void	rb(t_stack **stack_b, int read_flag)
+void	*free_stack(t_stack **stack)
 {
-	rotate(stack_b);
-	if (!read_flag)
-		ft_printf("rb\n");
+	t_stack	*tmp;
+	t_stack	*last;
+
+	if (!(*stack))
+		return (NULL);
+	last = lastnode(*stack);
+	(*stack)->previous = NULL;
+	last->next = NULL;
+	while (*stack)
+	{
+		tmp = (*stack)->next;
+		free(*stack);
+		*stack = tmp;
+	}
+	return (NULL);
 }
 
-void	rr(t_stack **stack_a, t_stack **stack_b, int read_flag)
+int	error(void)
 {
-	rotate(stack_a);
-	rotate(stack_b);
-	if (!read_flag)
-		ft_printf("rr\n");
+	ft_putstr_fd("Error\n", 2);
+	return (0);
 }

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 01:42:00 by jcameira          #+#    #+#             */
-/*   Updated: 2023/11/21 22:20:04 by jcameira         ###   ########.fr       */
+/*   Created: 2024/03/06 02:20:06 by jcameira          #+#    #+#             */
+/*   Updated: 2024/03/06 03:36:08 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <push_swap.h>
 
 void	error_exit(void)
 {
@@ -54,12 +54,11 @@ int	main(int argc, char **argv)
 	char	*line;
 
 	stack_b = NULL;
-	if (!check_input(argc, argv))
+	if (argc < 2)
 		return (0);
-	if (argc == 2)
-		stack_a = parse_input(argv[1], 0);
-	else
-		stack_a = fill_stack(argc, argv, 1);
+	if (!check_input(argc, argv))
+		return (1);
+	stack_a = create_stack(argv);
 	line = get_next_line(0);
 	while (line)
 	{

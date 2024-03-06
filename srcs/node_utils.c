@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 12:28:56 by jcameira          #+#    #+#             */
-/*   Updated: 2024/02/24 00:27:27 by jcameira         ###   ########.fr       */
+/*   Created: 2024/02/28 00:25:30 by jcameira          #+#    #+#             */
+/*   Updated: 2024/03/03 16:18:53 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <push_swap.h>
 
 int	stacksize(t_stack *stack)
 {
@@ -21,12 +21,28 @@ int	stacksize(t_stack *stack)
 		return (0);
 	tmp = stack;
 	i = 1;
-	while (stack->next != tmp)
+	while (tmp->next != stack)
 	{
 		i++;
-		stack = stack->next;
+		tmp = tmp->next;
 	}
 	return (i);
+}
+
+void	get_index(t_stack **stack)
+{
+	t_stack	*tmp;
+	int		i;
+	int		size;
+
+	size = stacksize(*stack);
+	tmp = *stack;
+	i = -1;
+	while (++i < size)
+	{
+		tmp->index = i;
+		tmp = tmp->next;
+	}
 }
 
 void	addnode_back(t_stack **stack, t_stack *new)
@@ -52,61 +68,40 @@ void	addnode_back(t_stack **stack, t_stack *new)
 void	addnode_front(t_stack **stack, t_stack *new)
 {
 	t_stack	*last;
-	int		size;
+	t_stack	*tmp;
 
 	if (!(*stack))
 	{
 		*stack = new;
 		(*stack)->next = *stack;
 		(*stack)->previous = *stack;
+		(*stack)->index = 0;
 		return ;
 	}
 	last = lastnode(*stack);
-	size = stacksize(*stack);
-	while ((*stack)->index != size)
+	tmp = *stack;
+	while (tmp->next != *stack)
 	{
-		(*stack)->index++;
-		(*stack) = (*stack)->next;
+		tmp->index++;
+		tmp = tmp->next;
 	}
-	(*stack)->index++;
-	(*stack) = (*stack)->next;
+	tmp->index++;
 	last->next = new;
 	new->previous = last;
 	new->next = *stack;
 	(*stack)->previous = new;
 	*stack = new;
+	(*stack)->index = 0;
 }
 
-void	free_stack(t_stack **stack)
-{
-	t_stack	*tmp;
-	t_stack	*last;
-
-	if (!(*stack))
-		return ;
-	*stack = find_first(*stack);
-	last = lastnode(*stack);
-	(*stack)->previous = NULL;
-	last->next = NULL;
-	while (*stack)
-	{
-		tmp = (*stack)->next;
-		(*stack)->nbr = 0;
-		(*stack)->index = 0;
-		free(*stack);
-		*stack = tmp;
-	}
-}
-
-t_stack	*newnode(int nbr, int index)
+t_stack	*newnode(int nbr)
 {
 	t_stack	*new;
 
-	new = (t_stack *)malloc(sizeof (t_stack));
+	new = malloc(sizeof(t_stack));
 	if (!new)
 		return (NULL);
 	new->nbr = nbr;
-	new->index = index;
 	new->next = NULL;
 	new->previous = NULL;
 	return (new);

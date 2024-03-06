@@ -12,20 +12,20 @@ RANDOM_MALLOC		=	-Xlinker --wrap=malloc
 AR					=	ar rcs
 RM					=	rm -rf
 
-SRCS				=	apply_movs_to_b.c calc_nbr_movs_to_push.c \
-						calculations.c find_spot_to_push.c input_checks.c \
-						moves.c node_utils.c push_swap_operations.c \
-						push_swap.c rev_rotate_operations.c \
-						rotate_operations.c search_stacks.c stack_a_creation.c \
-						#malloc.c
+SRCS				=	apply_moves.c calc_nbr_moves_to_push.c calculations.c \
+						create_stack.c find_spot_to_push.c input_checks.c \
+						memory_handle.c moves.c node_utils.c \
+						push_swap_operations.c push_swap.c \
+						rev_rotate_operations.c rotate_operations.c \
+						search_stack.c #malloc.c
 SRCS_PATH			=	srcs/
 
 MAIN				=	$(SRCS_PATH)main.c
 BONUS_MAIN			=	$(SRCS_PATH)checker.c
 
-OBJ_DIR				=	objects
-OBJS				=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
-ALL_OBJS			=	objects/*.o
+OBJ_DIR				=	objects/
+OBJS				=	$(SRCS:%.c=$(OBJ_DIR)%.o)
+ALL_OBJS			=	$(OBJ_DIR)*.o
 
 INCLUDES			=	includes/
 
@@ -41,7 +41,7 @@ TOTAL_SRCS          =   $(words $(SRCS))
 TOTAL_OBJS          =   $(words $(wildcard $(OBJ_DIR)*))
 FILES				=	0
 
-$(OBJ_DIR)/%.o:		$(SRCS_PATH)%.c
+$(OBJ_DIR)%.o:		$(SRCS_PATH)%.c
 					@$(CC) $(CFLAGS) -I /usr/local/include -c $< -o $@ && \
 					$(eval FILES=$(shell echo $$(($(FILES) + 1)))) \
 					$(call PRINT_PROGRESS,$(TOTAL_SRCS),$(GRN),$(YELLOW)Compiling$(DEFAULT) $@)
@@ -56,7 +56,6 @@ $(NAME):			$(OBJ_DIR) $(LIBFT) $(FT_PRINTF) $(GNL) $(OBJS)
 					else \
 						echo "Norminette$(GRN) OK!!$(DEFAULT)"; \
 					fi
-					
 
 bonus:				$(NAME)
 					@$(CC) $(CFLAGS) $(BONUS_MAIN) $(OBJS) -L$(LIBFT_PATH) -L$(GNL_PATH) -L$(FT_PRINTF_PATH) $(PERSONAL_LIBS) -o $(BONUS_NAME)
