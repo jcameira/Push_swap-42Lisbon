@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:16:35 by jcameira          #+#    #+#             */
-/*   Updated: 2024/03/06 19:34:27 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:43:12 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_dups(t_stack *stack)
 		while (tmp2 != stack)
 		{
 			if (tmp1->nbr == tmp2->nbr)
-				return (error());
+				return (error(NULL));
 			tmp2 = tmp2->next;
 		}
 		tmp1 = tmp1->next;
@@ -59,11 +59,11 @@ int	check_numeric(char *str)
 	if (str[0] == '+')
 	{
 		if (ft_strcmp(tmp, str + 1))
-			return (error());
+			return (error(tmp));
 	}
 	else
 		if (ft_strcmp(tmp, str))
-			return (error());
+			return (error(tmp));
 	free(tmp);
 	if (ft_atoi(str) < 0 || str[0] == '+')
 		i = 0;
@@ -72,7 +72,7 @@ int	check_numeric(char *str)
 	while (str[++i])
 	{
 		if (!ft_isdigit(str[i]))
-			return (error());
+			return (error(NULL));
 	}
 	return (1);
 }
@@ -93,7 +93,10 @@ int	check_input(int argc, char **argv)
 		while (str[++j])
 		{
 			if (!check_numeric(str[j]))
+			{
+				free_split(str);
 				return (0);
+			}
 		}
 		free_split(str);
 	}

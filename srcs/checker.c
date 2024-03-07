@@ -6,15 +6,17 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 02:20:06 by jcameira          #+#    #+#             */
-/*   Updated: 2024/03/06 03:36:08 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:46:47 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <push_swap.h>
 
-void	error_exit(void)
+void	error_exit(t_stack **stack_a, char *line)
 {
 	ft_printf("Error\n");
+	free_stack(stack_a);
+	free(line);
 	exit(0);
 }
 
@@ -43,7 +45,7 @@ void	check_line(t_stack **stack_a, t_stack **stack_b, char *l)
 	else if (l[0] == 'p' && l[1] == 'b' && l[2] == '\n')
 		pb(stack_a, stack_b, 1);
 	else
-		error_exit();
+		error_exit(stack_a, l);
 	free(l);
 }
 
@@ -59,6 +61,11 @@ int	main(int argc, char **argv)
 	if (!check_input(argc, argv))
 		return (1);
 	stack_a = create_stack(argv);
+	if (!check_dups(stack_a))
+	{
+		free_stack(&stack_a);
+		return (1);
+	}
 	line = get_next_line(0);
 	while (line)
 	{

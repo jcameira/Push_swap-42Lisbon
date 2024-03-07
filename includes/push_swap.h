@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:21:05 by jcameira          #+#    #+#             */
-/*   Updated: 2024/03/06 01:38:44 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:40:56 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		check_numeric(char *str);
 int		check_dups(t_stack *stack);
 void	free_split(char **split);
 void	*free_stack(t_stack **stack);
-int		error(void);
+int		error(char *itoa);
 t_stack	*lastnode(t_stack *stack);
 t_stack	*min_node(t_stack *stack);
 t_stack	*max_node(t_stack *stack);

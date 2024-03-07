@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 00:05:23 by jcameira          #+#    #+#             */
-/*   Updated: 2024/03/06 02:35:24 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:40:48 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	*free_stack(t_stack **stack)
 	return (NULL);
 }
 
-int	error(void)
+int	error(char *itoa)
 {
 	ft_putstr_fd("Error\n", 2);
+	if (itoa)
+		free(itoa);
 	return (0);
 }
