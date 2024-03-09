@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:16:35 by jcameira          #+#    #+#             */
-/*   Updated: 2024/03/07 15:43:12 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:06:47 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	check_dups(t_stack *stack)
 	t_stack	*tmp1;
 	t_stack	*tmp2;
 
+	if (!stacksize(stack))
+		return (0);
 	tmp1 = stack;
 	while (tmp1->next != stack)
 	{

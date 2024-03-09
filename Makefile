@@ -6,7 +6,7 @@ NAME				=	push_swap
 BONUS_NAME			=	checker
 
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror -I $(INCLUDES)
+CFLAGS				=	-Wall -Wextra -Werror -g -I $(INCLUDES)
 SANITIZE			=	-g -fsanitize=address,undefined
 RANDOM_MALLOC		=	-Xlinker --wrap=malloc
 AR					=	ar rcs

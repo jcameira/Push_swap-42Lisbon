@@ -6,7 +6,7 @@
 /*   By: jcameira <jcameira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:35:05 by jcameira          #+#    #+#             */
-/*   Updated: 2024/03/06 19:34:38 by jcameira         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:06:32 by jcameira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ int	main(int argc, char **argv)
 	stack_a = create_stack(argv);
 	if (!stack_a)
 		return (0);
-	if (!check_dups(stack_a))
-	{
-		free_stack(&stack_a);
-		return (1);
-	}
 	if (stack_a && !issorted(stack_a))
 		push_swap(&stack_a);
 	free_stack(&stack_a);
